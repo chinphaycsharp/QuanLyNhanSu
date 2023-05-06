@@ -281,7 +281,6 @@ D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Token\Index.cshtml.g.cs
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\QuanLyNhanSu.RazorTargetAssemblyInfo.cache
@@ -293,3 +292,4 @@ D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\refint\QuanLyNhanSu.dll
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\QuanLyNhanSu.pdb
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\QuanLyNhanSu.genruntimeconfig.cache
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\ref\QuanLyNhanSu.dll
+D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Token\Index.cshtml.g.cs

@@ -1,4 +1,4 @@
-﻿namespace QuanLyNhanSu.ViewModels
+﻿namespace QuanLyNhanSu.ViewModels.Login
 {
     public class userLoginViewModel
     {

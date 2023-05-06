@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace QuanLyNhanSu.Services
 {
-    public class AuthServiceImp : IAuthService
+    public class AuthServiceImpl : IAuthService
     {
         private readonly QuanLyNhanSuContext _dbContext;
-        public AuthServiceImp(QuanLyNhanSuContext dbContext) 
+        public AuthServiceImpl(QuanLyNhanSuContext dbContext) 
         {
             _dbContext = dbContext;
         }
 
-        public int Auth(string username, string password)
+        public Login Auth(string username, string password)
         {
             var userLogin = _dbContext.Logins.Where(x=>x.Username == username && x.Password == EncryptionHelper.ToMD5(password)).FirstOrDefault();
-            if (userLogin == null)
+            if (userLogin != null)
             {
-                return 0;
+                return userLogin;
             }
-            return 1;
+            return default;
         }
 
         public int Register(string username, string password, string confirmpassword, string email)

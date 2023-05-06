@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using QuanLyNhanSu.Commons;
 using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.ViewModels;
 using System;
@@ -21,14 +24,33 @@ namespace QuanLyNhanSu.Controllers
             return View();
         }
 
-        public IActionResult Auth(userLoginViewModel model)
+        public IActionResult Auth(string username, string password)
         {
-            var result = _authService.Auth(model.username,model.password);
-            if (result == 1)
+            var result = _authService.Auth(username,password);
+            if (result != null)
             {
-                return RedirectToAction("Index", "Home");
+                try
+                {
+                    string json = HttpContext.Session.GetString(commonConst.user_session);
+                    var userLogin = new
+                    {
+                        id = result.Id,
+                        username = username,
+                    };
+
+                    string jsonSave = JsonConvert.SerializeObject(userLogin);
+                    HttpContext.Session.SetString(commonConst.user_session, jsonSave);
+                    return RedirectToAction("Index", "Home");
+                }
+                catch(Exception ex)
+                {
+                    return View(ex.Message);
+                }
             }
-            return RedirectToAction("Index","Token");
+            else
+            {
+                return RedirectToAction("Index", "Token");
+            }
         }
     }
 }

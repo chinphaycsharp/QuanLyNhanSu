@@ -1,8 +1,10 @@
-﻿namespace QuanLyNhanSu.Interfaces
+﻿using QuanLyNhanSu.Models;
+
+namespace QuanLyNhanSu.Interfaces
 {
     public interface IAuthService
     {
-        int Auth(string username, string password);
+        Login Auth(string username, string password);
         int Register(string username, string password, string confirmpassword, string email);
     }
 }

@@ -8,10 +8,6 @@ namespace QuanLyNhanSu.Models
 {
     public partial class QuanLyNhanSuContext : DbContext
     {
-        public QuanLyNhanSuContext()
-        {
-        }
-
         public QuanLyNhanSuContext(DbContextOptions<QuanLyNhanSuContext> options)
             : base(options)
         {
