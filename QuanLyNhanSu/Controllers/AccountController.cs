@@ -3,7 +3,7 @@ using QuanLyNhanSu.Commons;
 
 namespace QuanLyNhanSu.Controllers
 {
-    public class EmployeeController : BaseController
+    public class AccountController : BaseController
     {
         public IActionResult Index()
         {

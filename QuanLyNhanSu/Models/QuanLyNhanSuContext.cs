@@ -8,6 +8,10 @@ namespace QuanLyNhanSu.Models
 {
     public partial class QuanLyNhanSuContext : DbContext
     {
+        public QuanLyNhanSuContext()
+        {
+        }
+
         public QuanLyNhanSuContext(DbContextOptions<QuanLyNhanSuContext> options)
             : base(options)
         {
@@ -17,14 +21,14 @@ namespace QuanLyNhanSu.Models
         public virtual DbSet<Hopdongld> Hopdonglds { get; set; }
         public virtual DbSet<HosoNv> HosoNvs { get; set; }
         public virtual DbSet<Login> Logins { get; set; }
+        public virtual DbSet<Quyen> Quyens { get; set; }
+        public virtual DbSet<QuyenNv> QuyenNvs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer("Server=DESKTOP-MV5RJQ0;User ID=quangle;Password=123456;Database=QuanLyNhanSu;Integrated Security=True");
-                optionsBuilder.UseSqlServer("Server=DESKTOP-S9FNGVF\\SQLEXPRESS;User ID=quangle;Password=07081999;Database=QuanLyNhanSu;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Name=ConnectionStrings:QuanLyNhanSu");
             }
         }
 
@@ -33,7 +37,7 @@ namespace QuanLyNhanSu.Models
             modelBuilder.Entity<Chucvu>(entity =>
             {
                 entity.HasKey(e => e.Mscv)
-                    .HasName("PK__CHUCVU__6CB235E5337593EF");
+                    .HasName("PK__CHUCVU__6CB235E5D70A01C7");
 
                 entity.ToTable("CHUCVU");
 
@@ -65,7 +69,7 @@ namespace QuanLyNhanSu.Models
             modelBuilder.Entity<Hopdongld>(entity =>
             {
                 entity.HasKey(e => e.SoHd)
-                    .HasName("PK__HOPDONGL__BC3CAB575A12F3D2");
+                    .HasName("PK__HOPDONGL__BC3CAB573D4FFAFD");
 
                 entity.ToTable("HOPDONGLD");
 
@@ -115,18 +119,18 @@ namespace QuanLyNhanSu.Models
                 entity.HasOne(d => d.MscvNavigation)
                     .WithMany(p => p.Hopdonglds)
                     .HasForeignKey(d => d.Mscv)
-                    .HasConstraintName("FK__HOPDONGLD__MSCV__3E52440B");
+                    .HasConstraintName("FK__HOPDONGLD__MSCV__173876EA");
 
                 entity.HasOne(d => d.MsnvNavigation)
                     .WithMany(p => p.Hopdonglds)
                     .HasForeignKey(d => d.Msnv)
-                    .HasConstraintName("FK__HOPDONGLD__MSNV__3F466844");
+                    .HasConstraintName("FK__HOPDONGLD__MSNV__182C9B23");
             });
 
             modelBuilder.Entity<HosoNv>(entity =>
             {
                 entity.HasKey(e => e.Msnv)
-                    .HasName("PK__HOSO_NV__6CB3885FD60E0F67");
+                    .HasName("PK__HOSO_NV__6CB3885F2D11D926");
 
                 entity.ToTable("HOSO_NV");
 
@@ -175,7 +179,7 @@ namespace QuanLyNhanSu.Models
                 entity.HasOne(d => d.IdloginNavigation)
                     .WithMany(p => p.HosoNvs)
                     .HasForeignKey(d => d.Idlogin)
-                    .HasConstraintName("FK__HOSO_NV__idlogin__398D8EEE");
+                    .HasConstraintName("FK__HOSO_NV__idlogin__1273C1CD");
             });
 
             modelBuilder.Entity<Login>(entity =>
@@ -209,6 +213,47 @@ namespace QuanLyNhanSu.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("username");
+            });
+
+            modelBuilder.Entity<Quyen>(entity =>
+            {
+                entity.HasKey(e => e.MaQuyen)
+                    .HasName("PK__QUYEN__1D4B7ED4FE18EB70");
+
+                entity.ToTable("QUYEN");
+
+                entity.Property(e => e.MaQuyen)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MoTa)
+                    .IsRequired()
+                    .HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<QuyenNv>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("QUYEN_NV");
+
+                entity.Property(e => e.MaQuyen)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Msnv)
+                    .HasMaxLength(10)
+                    .HasColumnName("MSNV");
+
+                entity.HasOne(d => d.MaQuyenNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.MaQuyen)
+                    .HasConstraintName("FK__QUYEN_NV__MaQuye__1BFD2C07");
+
+                entity.HasOne(d => d.MsnvNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.Msnv)
+                    .HasConstraintName("FK__QUYEN_NV__MSNV__1CF15040");
             });
 
             OnModelCreatingPartial(modelBuilder);

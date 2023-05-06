@@ -1,6 +1,4 @@
-using System;
-
-namespace QuanLyNhanSu.Models
+﻿namespace QuanLyNhanSu.Models
 {
     public class ErrorViewModel
     {

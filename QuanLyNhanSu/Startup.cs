@@ -38,6 +38,7 @@ namespace QuanLyNhanSu
             services.AddTransient<IAccountService, AccountServiceImpl>();
             services.AddTransient<IContractService, ContractServiceImpl>();
             services.AddTransient<IEmployeeService, EmployeeServiceImpl>();
+            services.AddTransient<IRoleService, RoleServiceImpl>();
             services.AddControllersWithViews();
         }
 

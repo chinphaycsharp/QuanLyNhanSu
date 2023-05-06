@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuanLyNhanSu
+namespace QuanLyNhanSu.Models
 {
     public class Program
     {
