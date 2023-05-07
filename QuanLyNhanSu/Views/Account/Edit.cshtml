@@ -1,0 +1,75 @@
+﻿@model QuanLyNhanSu.ViewModels.Account.EditAccountViewModel
+@using QuanLyNhanSu.Commons
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@{
+    var resultUsername = (ValidateResult)ViewBag.resultUsername;
+    var resultPassword = (ValidateResult)ViewBag.resultPassword;
+    var resultComfirmPass = (ValidateResult)ViewBag.resultComfirmPass;
+    var resultEmail = (ValidateResult)ViewBag.resultEmail;
+}
+
+<br />
+<h3>Sửa thông tin</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                @if (resultUsername != null)
+                {
+                    @if (resultUsername._isNull == false)
+                    {
+                        <span class="text-danger">@resultUsername._message</span>
+                    }
+                }
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                @if (resultPassword != null)
+                {
+                    @if (resultPassword._isNull == false)
+                    {
+                        <span class="text-danger">@resultPassword._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                @if (resultComfirmPass != null)
+                {
+                    @if (resultComfirmPass._isNull == false)
+                    {
+                        <span class="text-danger">@resultComfirmPass._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                @if (resultEmail != null)
+                {
+                    @if (resultEmail._isNull == false)
+                    {
+                        <span class="text-danger">@resultEmail._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

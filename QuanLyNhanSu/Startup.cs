@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.Models;
@@ -33,13 +35,15 @@ namespace QuanLyNhanSu
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
-
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthService, AuthServiceImpl>();
             services.AddTransient<IAccountService, AccountServiceImpl>();
             services.AddTransient<IContractService, ContractServiceImpl>();
             services.AddTransient<IEmployeeService, EmployeeServiceImpl>();
             services.AddTransient<IRoleService, RoleServiceImpl>();
-            services.AddControllersWithViews();
+            services.AddTransient<IRoleEmployeeService, RoleEmployeeServiceImpl>();
+            services.AddTransient<IPositionService, PositionServiceImpl>();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

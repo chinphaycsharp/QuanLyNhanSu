@@ -18,7 +18,7 @@ namespace QuanLyNhanSu.Models
         public string DieukhoanHd { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
+        public int status { get; set; }
         public virtual Chucvu MscvNavigation { get; set; }
         public virtual HosoNv MsnvNavigation { get; set; }
     }

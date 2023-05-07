@@ -1,0 +1,66 @@
+﻿@model QuanLyNhanSu.ViewModels.Position.EditPositionViewModel
+@using QuanLyNhanSu.Commons
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@{
+    var resultTenCv = (ValidateResult)ViewBag.resultTenCv;
+    var resultMotaCv = (ValidateResult)ViewBag.resultMotaCv;
+    var resultPhucaptrachnhiem = (ValidateResult)ViewBag.resultPhucaptrachnhiem;
+}
+
+<br />
+<h3>Sửa thông tin</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Mscv" class="form-control" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="TenCv" class="control-label"></label>
+                <input asp-for="TenCv" class="form-control" />
+                @if (resultTenCv != null)
+                {
+                    @if (resultTenCv._isNull == false)
+                    {
+                        <span class="text-danger">@resultTenCv._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="MotaCv" class="control-label"></label>
+                <input asp-for="MotaCv" class="form-control" />
+                @if (resultMotaCv != null)
+                {
+                    @if (resultMotaCv._isNull == false)
+                    {
+                        <span class="text-danger">@resultMotaCv._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Phucaptrachnhiem" class="control-label"></label>
+                <input asp-for="Phucaptrachnhiem" class="form-control" />
+                @if (resultPhucaptrachnhiem != null)
+                {
+                    @if (resultPhucaptrachnhiem._isNull == false)
+                    {
+                        <span class="text-danger">@resultPhucaptrachnhiem._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

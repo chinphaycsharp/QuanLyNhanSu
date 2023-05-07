@@ -1,36 +1,104 @@
-﻿using QuanLyNhanSu.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using QuanLyNhanSu.Helpers;
+using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.Models;
 using QuanLyNhanSu.ViewModels.Account;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace QuanLyNhanSu.Services
 {
     public class AccountServiceImpl : IAccountService
     {
-        public Task<int> AddAccount(AddAccountViewModel viewModel)
+        private readonly QuanLyNhanSuContext _dbContext;
+
+        public AccountServiceImpl(QuanLyNhanSuContext dbContext)
         {
-            throw new System.NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task<int> DeleteAccount(string id)
+        public async Task<int> AddAccount(AddAccountViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            Login account = new Login()
+            {
+                Username = viewModel.Username,
+                Password = EncryptionHelper.ToMD5(viewModel.Password),
+                Email = viewModel.Email,
+                CreatedAt = DateTime.Now,
+                status = 1
+            };
+            try
+            {
+                _dbContext.Logins.Add(account);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
-        public Task<int> EditAccount(EditAccountViewModel viewModel)
+        public async Task<int> DeleteAccount(int id)
         {
-            throw new System.NotImplementedException();
+            var account = await _dbContext.Logins.FindAsync(id);
+            account.status = 0;
+            try
+            {
+                _dbContext.Logins.Update(account);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
-        public Task<Login> GetAccountById(string maHs)
+        public async Task<int> EditAccount(EditAccountViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            Login account = await _dbContext.Logins.FindAsync(viewModel.Id);
+            account.Username = viewModel.Username;
+            account.Password = EncryptionHelper.ToMD5(viewModel.Password);
+            account.Email = viewModel.Email;
+            account.UpdatedAt = DateTime.Now;
+            account.status = 0;
+            try
+            {
+                _dbContext.Logins.Update(account);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
-        public Task<List<Login>> GetAllAccounts()
+        public async Task<EditAccountViewModel> GetAccountById(int id)
         {
-            throw new System.NotImplementedException();
+            var account = await _dbContext.Logins.FindAsync(id);
+            EditAccountViewModel result = new EditAccountViewModel()
+            {
+                Username = account.Username,
+                Password = account.Password,
+                Email = account.Email,
+                UpdatedAt = account.UpdatedAt
+            };
+            return result;
+        }
+
+        public IQueryable<Login> GetAllAccounts(string search)
+        {
+            var accounts = _dbContext.Logins.Where(x=>x.status == 1).AsQueryable();
+            if (search == null || search == String.Empty)
+            {
+                return accounts.AsQueryable();
+            }
+            accounts = accounts.Where(x => x.Username.Contains(search) && x.status == 1).AsQueryable();
+            return accounts;
         }
     }
 }

@@ -1,36 +1,111 @@
-﻿using QuanLyNhanSu.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.Models;
 using QuanLyNhanSu.ViewModels.Contract;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace QuanLyNhanSu.Services
 {
     public class ContractServiceImpl : IContractService
     {
-        public Task<int> AddContract(AddContractViewModel viewModel)
+        private readonly QuanLyNhanSuContext _dbContext;
+        public ContractServiceImpl(QuanLyNhanSuContext dbContext)
         {
-            throw new System.NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task<int> DeleteContract(string id)
+        public async Task<int> AddContract(AddContractViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            Hopdongld hopdongld = new Hopdongld()
+            {
+                SoHd = viewModel.SoHd,
+                Mscv = viewModel.Mscv,
+                Msnv = viewModel.Msnv,
+                Tgianbatdau = viewModel.Tgianbatdau,
+                Tgianketthuc = DateTime.Now.AddYears(1),
+                HesoluongCb = viewModel.HesoluongCb,
+                MucluongCb = viewModel.MucluongCb,
+                DieukhoanHd = viewModel.DieukhoanHd,
+                CreatedAt = DateTime.Now,
+                status = 1
+            };
+            try
+            {
+                _dbContext.Hopdonglds.Add(hopdongld);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
-        public Task<int> EditContract(EditContractViewModel viewModel)
+        public async Task<int> DeleteContract(string id)
         {
-            throw new System.NotImplementedException();
+            var hd = await _dbContext.Hopdonglds.FindAsync(id);
+            hd.status = 0;
+            try
+            {
+                _dbContext.Hopdonglds.Update(hd);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
-        public Task<List<Hopdongld>> GetAllContract()
+        public async Task<int> EditContract(EditContractViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            Hopdongld hopdongld = await _dbContext.Hopdonglds.FindAsync(viewModel.SoHd);
+            hopdongld.SoHd = viewModel.SoHd;
+            hopdongld.Mscv = viewModel.Mscv;
+            hopdongld.Msnv = viewModel.Msnv;
+            hopdongld.Tgianbatdau = viewModel.Tgianbatdau;
+            hopdongld.Tgianketthuc = DateTime.Now.AddYears(1);
+            hopdongld.HesoluongCb = viewModel.HesoluongCb;
+            hopdongld.MucluongCb = viewModel.MucluongCb;
+            hopdongld.DieukhoanHd = viewModel.DieukhoanHd;
+            hopdongld.CreatedAt = DateTime.Now;
+            hopdongld.status = 1;
+            try
+            {
+                _dbContext.Hopdonglds.Update(hopdongld);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
-        public Task<Hopdongld> GetContractById(string maHs)
+        public IQueryable<Hopdongld> GetAllContract()
         {
-            throw new System.NotImplementedException();
+            return _dbContext.Hopdonglds.Where(x=>x.status == 1).AsQueryable();
+        }
+
+        public async Task<EditContractViewModel> GetContractById(string sohd)
+        {
+            var hd = await _dbContext.Hopdonglds.FindAsync(sohd);
+            EditContractViewModel result = new EditContractViewModel()
+            {
+                SoHd = sohd,
+                Mscv = hd.Mscv,
+                Msnv = hd.Msnv,
+                LoaiHd = hd.LoaiHd,
+                Tgianbatdau = hd.Tgianbatdau,
+                Tgianketthuc = hd.Tgianketthuc,
+                HesoluongCb = hd.HesoluongCb,
+                MucluongCb = hd.MucluongCb,
+                DieukhoanHd = hd.DieukhoanHd,
+            };
+            return result;
         }
     }
 }

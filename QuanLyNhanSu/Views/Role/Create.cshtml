@@ -1,0 +1,49 @@
+﻿@model QuanLyNhanSu.ViewModels.Role.AddRoleViewModel
+@using QuanLyNhanSu.Commons
+@{
+    ViewData["Title"] = "Create";
+}
+@{
+    var resultMaQuyen = (ValidateResult)ViewBag.resultMaQuyen;
+    var resultMoTa = (ValidateResult)ViewBag.resultMoTa;
+}
+<br />
+<h3>Thêm mới</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaQuyen" class="control-label"></label>
+                <input asp-for="MaQuyen" class="form-control" />
+                @if (resultMaQuyen != null)
+                {
+                    @if (resultMaQuyen._isNull == false)
+                    {
+                        <span class="text-danger">@resultMaQuyen._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTa" class="control-label"></label>
+                <input asp-for="MoTa" class="form-control" />
+                @if (resultMaQuyen != null)
+                {
+                    @if (resultMaQuyen._isNull == false)
+                    {
+                        <span class="text-danger">@resultMaQuyen._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

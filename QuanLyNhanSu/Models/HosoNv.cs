@@ -25,7 +25,7 @@ namespace QuanLyNhanSu.Models
         public string Điachithuongtru { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
+        public int status { get; set; }
         public virtual Login IdloginNavigation { get; set; }
         public virtual ICollection<Hopdongld> Hopdonglds { get; set; }
     }

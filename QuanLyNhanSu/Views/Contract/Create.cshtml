@@ -1,0 +1,85 @@
+﻿@model QuanLyNhanSu.ViewModels.Contract.AddContractViewModel
+@using QuanLyNhanSu.Commons
+@{
+    ViewData["Title"] = "Create";
+}
+@{
+    var resultSoHd = (ValidateResult)ViewBag.resultSoHd;
+    var resultMscv = (ValidateResult)ViewBag.resultMscv;
+    var resultMsnv = (ValidateResult)ViewBag.resultMsnv;
+    var resultLoaiHd = (ValidateResult)ViewBag.resultLoaiHd;
+    var resultHesoluongCb = (ValidateResult)ViewBag.resultHesoluongCb;
+    var resultMucluongCb = (ValidateResult)ViewBag.resultMucluongCb;
+    var DieukhoanHd = (ValidateResult)ViewBag.DieukhoanHd;
+}
+<h1>Create</h1>
+
+<h4>AddContractViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SoHd" class="control-label"></label>
+                <input asp-for="SoHd" class="form-control" />
+                <span asp-validation-for="SoHd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mscv" class="control-label"></label>
+                <select id="drpEmpList" class="form-control" asp-for="Msnv" asp-items="@(new SelectList(ViewBag.employees, "Msnv", "HotenNv"))">
+                </select>
+                <span asp-validation-for="Mscv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Msnv" class="control-label"></label>
+                <select id="drpPosList" class="form-control" asp-for="Mscv" asp-items="@(new SelectList( ViewBag.positions, "Mscv", "TenCv"))">
+                </select>
+                <span asp-validation-for="Msnv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiHd" class="control-label"></label>
+                <input asp-for="LoaiHd" class="form-control" />
+                <span asp-validation-for="LoaiHd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tgianbatdau" class="control-label"></label>
+                <input asp-for="Tgianbatdau" class="form-control" />
+                <span asp-validation-for="Tgianbatdau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tgianketthuc" class="control-label"></label>
+                <input asp-for="Tgianketthuc" class="form-control" />
+                <span asp-validation-for="Tgianketthuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HesoluongCb" class="control-label"></label>
+                <input asp-for="HesoluongCb" class="form-control" />
+                <span asp-validation-for="HesoluongCb" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MucluongCb" class="control-label"></label>
+                <input asp-for="MucluongCb" class="form-control" />
+                <span asp-validation-for="MucluongCb" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DieukhoanHd" class="control-label"></label>
+                <input asp-for="DieukhoanHd" class="form-control" />
+                <span asp-validation-for="DieukhoanHd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

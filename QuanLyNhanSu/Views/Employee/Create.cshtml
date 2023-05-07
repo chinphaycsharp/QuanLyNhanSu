@@ -1,0 +1,126 @@
+﻿@model QuanLyNhanSu.ViewModels.Employee.AddEmployeeViewModel
+@using QuanLyNhanSu.Commons
+@{
+    ViewData["Title"] = "Create";
+}
+
+@{
+    var resultMsnv = (ValidateResult)ViewBag.resultMsnv;
+    var resultHotenNv = (ValidateResult)ViewBag.resultHotenNv;
+    var resultGioitinh = (ValidateResult)ViewBag.resultGioitinh;
+    var resultQueQuan = (ValidateResult)ViewBag.resultQueQuan;
+    var resultSđt = (ValidateResult)ViewBag.resultSđt;
+    var resultSoCmtnd = (ValidateResult)ViewBag.resultSoCmtnd;
+    var resultĐiachithuongtru = (ValidateResult)ViewBag.resultĐiachithuongtru;
+}
+
+<br />
+<h3>Thêm mới</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Msnv" class="control-label"></label>
+                <input asp-for="Msnv" class="form-control" />
+                @if (resultMsnv != null)
+                {
+                    @if (resultMsnv._isNull == false)
+                    {
+                        <span class="text-danger">@resultMsnv._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="HotenNv" class="control-label"></label>
+                <input asp-for="HotenNv" class="form-control" />
+                @if (resultHotenNv != null)
+                {
+                    @if (resultHotenNv._isNull == false)
+                    {
+                        <span class="text-danger">@resultHotenNv._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Gioitinh" class="control-label"></label>
+                <input asp-for="Gioitinh" class="form-control" />
+                @if (resultGioitinh != null)
+                {
+                    @if (resultGioitinh._isNull == false)
+                    {
+                        <span class="text-danger">@resultGioitinh._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Ngaysinh" class="control-label"></label>
+                <input asp-for="Ngaysinh" class="form-control" />
+                <span asp-validation-for="Ngaysinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QueQuan" class="control-label"></label>
+                <input asp-for="QueQuan" class="form-control" />
+                @if (resultQueQuan != null)
+                {
+                    @if (resultQueQuan._isNull == false)
+                    {
+                        <span class="text-danger">@resultQueQuan._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Sđt" class="control-label"></label>
+                <input asp-for="Sđt" class="form-control" />
+                @if (resultSđt != null)
+                {
+                    @if (resultSđt._isNull == false)
+                    {
+                        <span class="text-danger">@resultSđt._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="SoCmtnd" class="control-label"></label>
+                <input asp-for="SoCmtnd" class="form-control" />
+                @if (resultSoCmtnd != null)
+                {
+                    @if (resultSoCmtnd._isNull == false)
+                    {
+                        <span class="text-danger">@resultSoCmtnd._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Ngaycap" class="control-label"></label>
+                <input asp-for="Ngaycap" class="form-control" />
+                <span asp-validation-for="Ngaycap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Noicap" class="control-label"></label>
+                <input asp-for="Noicap" class="form-control" />
+                <span asp-validation-for="Noicap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Điachithuongtru" class="control-label"></label>
+                <input asp-for="Điachithuongtru" class="form-control" />
+                @if (resultĐiachithuongtru != null)
+                {
+                    @if (resultĐiachithuongtru._isNull == false)
+                    {
+                        <span class="text-danger">@resultĐiachithuongtru._message</span>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

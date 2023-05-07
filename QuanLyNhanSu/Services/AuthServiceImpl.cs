@@ -15,17 +15,12 @@ namespace QuanLyNhanSu.Services
 
         public Login Auth(string username, string password)
         {
-            var userLogin = _dbContext.Logins.Where(x=>x.Username == username && x.Password == EncryptionHelper.ToMD5(password)).FirstOrDefault();
+            var userLogin = _dbContext.Logins.Where(x=>x.Username == username && x.Password == EncryptionHelper.ToMD5(password) && x.status == 1).FirstOrDefault();
             if (userLogin != null)
             {
                 return userLogin;
             }
             return default;
-        }
-
-        public int Register(string username, string password, string confirmpassword, string email)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

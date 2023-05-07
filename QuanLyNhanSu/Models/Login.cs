@@ -18,7 +18,7 @@ namespace QuanLyNhanSu.Models
         public string Email { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
+        public int status { get; set; }
         public virtual ICollection<HosoNv> HosoNvs { get; set; }
     }
 }

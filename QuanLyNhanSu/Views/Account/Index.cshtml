@@ -1,0 +1,123 @@
+﻿@using QuanLyNhanSu.Commons
+@model PaginatedList<QuanLyNhanSu.Models.Login>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<script type="text/javascript">
+    var _id = null;
+    function loadId(id) {
+        _id = id
+    }
+    function deleteRecord() {
+        $.ajax({
+            type: "POST",
+            data: { id: _id},
+            url: '@Url.Action("Delete")',
+            dataType: 'json',
+            success: function () {
+                window.location.href = "/Account/Index";
+            },
+            error: function () {
+                alert("Error while deleting data");
+            }
+        });
+    }
+</script>
+<br />
+<div style="display:flex ;justify-content:space-between">
+    <a asp-action="Create" class="btn btn-outline-success">Thêm</a>
+    <span>
+        <form class="form-inline my-2 my-lg-0" asp-controller="Account" asp-action="Index">
+            <input class="form-control mr-sm-2" type="search" placeholder="Nhập gì đó..." name="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+        </form>
+    </span>
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Tài khoản
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Ngày tạo
+                </th>
+                <th>
+                    Ngày sửa
+                </th>
+                <th class="text-center">Sửa</th>
+                <th class="text-center">Gán quyền</th>
+                <th class="text-center">Xóa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedAt)
+                </td>
+                <td class="text-center">
+                    <a asp-action="Edit" class="btn btn-outline-primary" asp-route-id="@item.Id">Sửa</a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="AddRole" class="btn btn-outline-warning" asp-route-id="@item.Id">Gán quyền</a>
+                </td>
+                <td class="text-center">
+                    <a data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-danger" onclick="loadId('@item.Id')">Xóa</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Trước
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Sau
+</a>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa quyền</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa tài khoản này chứ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="deleteRecord()" class="btn btn-outline-primary">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>

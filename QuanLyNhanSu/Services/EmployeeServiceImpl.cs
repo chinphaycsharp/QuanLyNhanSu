@@ -17,6 +17,23 @@ namespace QuanLyNhanSu.Services
             _dbContext = dbContext;
         }
 
+        public async Task<int> AddAccount(string id, int Idlogin)
+        {
+            var employee = await _dbContext.HosoNvs.FindAsync(id);
+            employee.status = 1;
+            employee.Idlogin = Idlogin;
+            try
+            {
+                _dbContext.HosoNvs.Update(employee);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+        }
+
         public async Task<int> AddEmployee(AddEmployeeViewModel viewModel)
         {
             HosoNv nv = new HosoNv()
@@ -32,7 +49,8 @@ namespace QuanLyNhanSu.Services
                 Ngaycap = viewModel.Ngaycap,
                 Noicap = viewModel.Noicap,
                 Điachithuongtru = viewModel.Điachithuongtru,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                status = 1
             };
             try
             {
@@ -49,9 +67,10 @@ namespace QuanLyNhanSu.Services
         public async Task<int> DeleteEmployee(string id)
         {
             var employee = await _dbContext.HosoNvs.FindAsync(id);
+            employee.status = 0;
             try
             {
-                _dbContext.HosoNvs.Remove(employee);
+                _dbContext.HosoNvs.Update(employee);
                 await _dbContext.SaveChangesAsync();
                 return 1;
             }
@@ -63,21 +82,20 @@ namespace QuanLyNhanSu.Services
 
         public async Task<int> EditEmployee(EditEmployeeViewModel viewModel)
         {
-            HosoNv nv = new HosoNv()
-            {
-                Msnv = viewModel.Msnv,
-                Idlogin = viewModel.Idlogin,
-                HotenNv = viewModel.HotenNv,
-                Gioitinh = viewModel.Gioitinh,
-                Ngaysinh = viewModel.Ngaysinh,
-                QueQuan = viewModel.QueQuan,
-                Sđt = viewModel.Sđt,
-                SoCmtnd = viewModel.SoCmtnd,
-                Ngaycap = viewModel.Ngaycap,
-                Noicap = viewModel.Noicap,
-                Điachithuongtru = viewModel.Điachithuongtru,
-                CreatedAt = DateTime.Now
-            };
+            HosoNv nv = await _dbContext.HosoNvs.FindAsync(viewModel.Msnv);
+            nv.Msnv = viewModel.Msnv;
+            nv.Idlogin = viewModel.Idlogin;
+            nv.HotenNv = viewModel.HotenNv;
+            nv.Gioitinh = viewModel.Gioitinh;
+            nv.Ngaysinh = viewModel.Ngaysinh;
+            nv.QueQuan = viewModel.QueQuan;
+            nv.Sđt = viewModel.Sđt;
+            nv.SoCmtnd = viewModel.SoCmtnd;
+            nv.Ngaycap = viewModel.Ngaycap;
+            nv.Noicap = viewModel.Noicap;
+            nv.Điachithuongtru = viewModel.Điachithuongtru;
+            nv.UpdatedAt = DateTime.Now;
+            nv.status = 1;
             try
             {
                 _dbContext.HosoNvs.Update(nv);
@@ -90,14 +108,34 @@ namespace QuanLyNhanSu.Services
             }
         }
 
-        public async Task<List<HosoNv>> GetAllEmployees()
+        public IQueryable<HosoNv> GetAllEmployees(string search)
         {
-            return await _dbContext.HosoNvs.ToListAsync();
+            var employees = _dbContext.HosoNvs.Where(x=>x.status == 1).AsQueryable();
+            if (search == null || search == String.Empty)
+            {
+                return employees.AsQueryable();
+            }
+            employees = employees.Where(x => x.Msnv.Contains(search) && x.status == 1).AsQueryable();
+            return employees;
         }
 
-        public async Task<HosoNv> GetEmployeeById(string maHs)
+        public async Task<EditEmployeeViewModel> GetEmployeeById(string manv)
         {
-            return await _dbContext.HosoNvs.FindAsync(maHs);
+            var employee = await _dbContext.HosoNvs.FindAsync(manv);
+            EditEmployeeViewModel result = new EditEmployeeViewModel()
+            {
+                Msnv = employee.Msnv,
+                HotenNv = employee.HotenNv,
+                Gioitinh = employee.Gioitinh,
+                Ngaysinh = employee.Ngaysinh,
+                QueQuan = employee.QueQuan,
+                Sđt = employee.Sđt,
+                SoCmtnd = employee.SoCmtnd,
+                Ngaycap = employee.Ngaycap,
+                Noicap = employee.Noicap,
+                Điachithuongtru = employee.Điachithuongtru
+            };
+            return result;
         }
     }
 }

@@ -23,5 +23,6 @@ namespace QuanLyNhanSu.ViewModels.Employee
         public string Noicap { get; set; }
         [Required]
         public string Điachithuongtru { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

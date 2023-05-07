@@ -1,0 +1,36 @@
+﻿@using QuanLyNhanSu.Commons
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@using QuanLyNhanSu.ViewModels.Login
+@using Newtonsoft.Json;
+
+@{
+    var currentUser = Accessor.HttpContext.Session.GetString(commonConst.user_session);
+    userViewModel viewModel = JsonConvert.DeserializeObject<userViewModel>(currentUser);
+    List<Navbar> navbars = new List<Navbar>();
+    foreach (var item in Navbar.navbars)
+    {
+        foreach (var role in viewModel.roles)
+        {
+            if (item.role == role.MaQuyen)
+            {
+                if (!navbars.Any(x => x.name == item.name))
+                {
+                    navbars.Add(item);
+                }
+            }
+        }
+    }
+}
+
+<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav flex-grow-1">
+        @foreach (var item in navbars)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="@item.url" asp-action="Index">@item.name</a>
+            </li>
+        }
+    </ul>
+    <a class="navbar-brand" asp-controller="Token" asp-action="Logout">Thoát</a>
+</div>
