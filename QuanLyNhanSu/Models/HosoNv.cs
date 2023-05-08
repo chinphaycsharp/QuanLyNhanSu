@@ -9,6 +9,7 @@ namespace QuanLyNhanSu.Models
     {
         public HosoNv()
         {
+            DoanhthuNvs = new HashSet<DoanhthuNv>();
             Hopdonglds = new HashSet<Hopdongld>();
         }
 
@@ -25,8 +26,10 @@ namespace QuanLyNhanSu.Models
         public string Điachithuongtru { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public int status { get; set; }
+        public int? Status { get; set; }
+
         public virtual Login IdloginNavigation { get; set; }
+        public virtual ICollection<DoanhthuNv> DoanhthuNvs { get; set; }
         public virtual ICollection<Hopdongld> Hopdonglds { get; set; }
     }
 }

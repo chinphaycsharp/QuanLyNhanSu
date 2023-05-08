@@ -18,7 +18,8 @@ namespace QuanLyNhanSu.Models
         public decimal? Phucaptrachnhiem { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public int status { get; set; }
+        public int? Status { get; set; }
+
         public virtual ICollection<Hopdongld> Hopdonglds { get; set; }
     }
 }

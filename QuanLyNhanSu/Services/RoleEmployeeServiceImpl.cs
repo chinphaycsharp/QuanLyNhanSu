@@ -22,8 +22,8 @@ namespace QuanLyNhanSu.Services
             QuyenNv quyenNv = new QuyenNv()
             {
                 MaQuyen = viewModel.MaQuyen,
-                id = viewModel.idAccount,
-                status =1
+                IdLogin = viewModel.idAccount,
+                Status = 1
             };
             try
             {
@@ -40,7 +40,7 @@ namespace QuanLyNhanSu.Services
         public async Task<int> DeleteRoleEmployee(string maquyen)
         {
             var quyenNv = await _dbContext.QuyenNvs.FindAsync(maquyen);
-            quyenNv.status = 0;
+            quyenNv.Status = 0;
             try
             {
                 _dbContext.QuyenNvs.Update(quyenNv);
@@ -57,8 +57,8 @@ namespace QuanLyNhanSu.Services
         {
             QuyenNv quyenNv = await _dbContext.QuyenNvs.FindAsync(viewModel.MaQuyen);
             quyenNv.MaQuyen = viewModel.MaQuyen;
-            quyenNv.id = viewModel.idAccount;
-            quyenNv.status = 1;
+            quyenNv.IdLogin = viewModel.idAccount;
+            quyenNv.Status = 1;
             try
             {
                 _dbContext.QuyenNvs.Add(quyenNv);
@@ -73,16 +73,16 @@ namespace QuanLyNhanSu.Services
 
         public async Task<List<QuyenNv>> GetAllRoleEmployees()
         {
-            return await _dbContext.QuyenNvs.Where(x=>x.status == 1).ToListAsync();
+            return await _dbContext.QuyenNvs.Where(x=>x.Status == 1).ToListAsync();
         }
 
         public async Task<List<RoleEmployeeViewModel>> GetRoleEmployeeByIdAccount(int idAccount)
         {
-            var quyenNvs = await _dbContext.QuyenNvs.Where(x=>x.id == idAccount && x.status == 1).ToListAsync();
+            var quyenNvs = await _dbContext.QuyenNvs.Where(x=>x.IdLogin == idAccount && x.Status == 1).ToListAsync();
             var result = from x in quyenNvs
                          select new RoleEmployeeViewModel()
                          {
-                             id = x.id,
+                             id = x.IdLogin.Value,
                              MaQuyen = x.MaQuyen
                          };
             return result.ToList();

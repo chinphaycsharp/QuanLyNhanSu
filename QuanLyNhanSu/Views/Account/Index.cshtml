@@ -23,6 +23,8 @@
             }
         });
     }
+
+
 </script>
 <br />
 <div style="display:flex ;justify-content:space-between">
@@ -76,7 +78,7 @@
                     <a asp-action="Edit" class="btn btn-outline-primary" asp-route-id="@item.Id">Sửa</a>
                 </td>
                 <td class="text-center">
-                    <a asp-action="AddRole" class="btn btn-outline-warning" asp-route-id="@item.Id">Gán quyền</a>
+                        <a asp-action="AddRoleToAccount" class="btn btn-outline-warning" asp-route-id="@item.Id">Gán quyền</a>
                 </td>
                 <td class="text-center">
                     <a data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-danger" onclick="loadId('@item.Id')">Xóa</a>

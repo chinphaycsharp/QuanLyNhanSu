@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QuanLyNhanSu.Commons;
 using QuanLyNhanSu.Helpers;
 using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.Models;
 using QuanLyNhanSu.ViewModels.Account;
+using QuanLyNhanSu.ViewModels.Role;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,9 +14,11 @@ namespace QuanLyNhanSu.Controllers
     public class AccountController : BaseController
     {
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private readonly IRoleService _roleService;
+        public AccountController(IAccountService accountService, IRoleService roleService)
         {
             _accountService = accountService;
+            _roleService = roleService;
         }
 
         public async Task<IActionResult> Index(string search, int? pageNumber)
@@ -22,6 +26,39 @@ namespace QuanLyNhanSu.Controllers
             var accounts = _accountService.GetAllAccounts(search);
             int pageSize = 1;
             return View(await PaginatedList<Login>.CreateAsync(accounts.AsQueryable(), pageNumber ?? 1, pageSize));
+        }
+
+        [HttpGet]
+        public IActionResult AddRoleToAccount(int id)
+        {
+            var roles = _roleService.GetAllRoles().ToList();
+            AddRoleToAccountViewModel model = new AddRoleToAccountViewModel()
+            {
+                Id = id,
+                drpRoles = roles.Select(x => new SelectListItem { Text = x.MaQuyen, Value = x.MaQuyen }).ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRoleToAccount(AddRoleToAccountViewModel model)
+        {
+            ValidateResult resultRoles = model.Roles.Length.ToString().ValidateAccount("Roles", "") == null ? null : model.Roles.Length.ToString().ValidateAccount("Roles", "");
+            if (resultRoles._isNull == false )
+            {
+                ViewBag.resultPassword = resultRoles;
+
+                return View();
+            }
+            var isSuccess = await _accountService.AddRoleToAccount(model);
+            if (isSuccess == 1)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]

@@ -35,7 +35,9 @@ using QuanLyNhanSu.Commons;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3d1f5ee70c93bb8fb93d3f82cb7af21227142a51", @"/Views/Position/Index.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0d12df71036bffc0fc7dc4918dff3dde13a470c9", @"/Views/_ViewImports.cshtml")]
+    #nullable restore
     public class Views_Position_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<PaginatedList<QuanLyNhanSu.Models.Chucvu>>
+    #nullable disable
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Create", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("btn btn-outline-success"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -101,7 +103,7 @@ using QuanLyNhanSu.Commons;
 <br />
 <div style=""display:flex ;justify-content:space-between"">
     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a516821", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a516867", async() => {
                 WriteLiteral("Thêm");
             }
             );
@@ -118,7 +120,7 @@ using QuanLyNhanSu.Commons;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n    <span>\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a518079", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a518125", async() => {
                 WriteLiteral("\r\n            <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Nhập gì đó...\" name=\"search\">\r\n            <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Tìm kiếm</button>\r\n        ");
             }
             );
@@ -204,7 +206,7 @@ using QuanLyNhanSu.Commons;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n                </td>\r\n                <td class=\"text-center\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a5112047", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a5112093", async() => {
                 WriteLiteral("Sửa");
             }
             );
@@ -266,7 +268,7 @@ WriteAttributeValue("", 2435, item.Mscv, 2435, 10, false);
 #line hidden
 #nullable disable
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a5115523", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a5115569", async() => {
                 WriteLiteral("\r\n    Trước\r\n");
             }
             );
@@ -308,7 +310,7 @@ AddHtmlAttributeValue(" ", 2770, prevDisabled, 2771, 13, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a5118266", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d1f5ee70c93bb8fb93d3f82cb7af21227142a5118312", async() => {
                 WriteLiteral("\r\n    Sau\r\n");
             }
             );
@@ -372,16 +374,26 @@ AddHtmlAttributeValue(" ", 2903, nextDisabled, 2904, 13, false);
 </div>");
         }
         #pragma warning restore 1998
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<PaginatedList<QuanLyNhanSu.Models.Chucvu>> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<PaginatedList<QuanLyNhanSu.Models.Chucvu>> Html { get; private set; } = default!;
+        #nullable disable
     }
 }
 #pragma warning restore 1591

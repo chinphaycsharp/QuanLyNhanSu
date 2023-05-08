@@ -23,7 +23,7 @@ namespace QuanLyNhanSu.Services
             {
                 MaQuyen = viewModel.MaQuyen,
                 MoTa = viewModel.MoTa,
-                status = 1
+                Status = 1
             };
             try
             {
@@ -40,7 +40,7 @@ namespace QuanLyNhanSu.Services
         public async Task<int> DeleteRole(string maquyen)
         {
             var quyen = await _dbContext.Quyens.FindAsync(maquyen);
-            quyen.status = 0;
+            quyen.Status = 0;
             try
             {
                 _dbContext.Quyens.Update(quyen);
@@ -58,7 +58,7 @@ namespace QuanLyNhanSu.Services
             Quyen quyen = await _dbContext.Quyens.FindAsync(viewModel.MaQuyen);
             quyen.MaQuyen = viewModel.MaQuyen;
             quyen.MoTa = viewModel.MoTa;
-            quyen.status = 0;
+            quyen.Status = 0;
             try
             {
                 _dbContext.Quyens.Update(quyen);
@@ -73,7 +73,7 @@ namespace QuanLyNhanSu.Services
 
         public IQueryable<Quyen> GetAllRoles()
         {
-            return _dbContext.Quyens.Where(x=>x.status == 1).AsQueryable();
+            return _dbContext.Quyens.Where(x => x.Status == 1).AsQueryable();
         }
 
         public async Task<EditRoleViewModel> GetRoleById(string maquyen)

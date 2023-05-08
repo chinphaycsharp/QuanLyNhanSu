@@ -24,7 +24,7 @@ namespace QuanLyNhanSu.Services
                 MotaCv = viewModel.MotaCv,
                 Phucaptrachnhiem = viewModel.Phucaptrachnhiem,
                 CreatedAt = DateTime.Now,
-                status =1
+                Status =1
             };
 
             try
@@ -42,7 +42,7 @@ namespace QuanLyNhanSu.Services
         public async Task<int> DeletePosition(string id)
         {
             var Chucvu = await _dbContext.Chucvus.FindAsync(id);
-            Chucvu.status = 0;
+            Chucvu.Status = 0;
             try
             {
                 _dbContext.Chucvus.Update(Chucvu);
@@ -62,7 +62,7 @@ namespace QuanLyNhanSu.Services
             chucvu.MotaCv = viewModel.MotaCv;
             chucvu.Phucaptrachnhiem = viewModel.Phucaptrachnhiem;
             chucvu.UpdatedAt = DateTime.Now;
-            chucvu.status= 1;
+            chucvu.Status = 1;
             try
             {
                 _dbContext.Chucvus.Update(chucvu);
@@ -77,12 +77,12 @@ namespace QuanLyNhanSu.Services
 
         public IQueryable<Chucvu> GetAllPostions(string search)
         {
-            var Chucvus = _dbContext.Chucvus.Where(x=>x.status == 1).AsQueryable();
+            var Chucvus = _dbContext.Chucvus.Where(x=>x.Status == 1).AsQueryable();
             if (search == null || search == String.Empty)
             {
                 return Chucvus.AsQueryable();
             }
-            Chucvus = Chucvus.Where(x => x.Mscv.Contains(search) && x.status == 1).AsQueryable();
+            Chucvus = Chucvus.Where(x => x.Mscv.Contains(search) && x.Status == 1).AsQueryable();
             return Chucvus;
         }
 

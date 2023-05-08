@@ -8,9 +8,10 @@ namespace QuanLyNhanSu.Models
     public partial class QuyenNv
     {
         public string MaQuyen { get; set; }
-        public int id { get; set; }
-        public int status { get; set; }
+        public int? IdLogin { get; set; }
+        public int? Status { get; set; }
+
+        public virtual Login IdLoginNavigation { get; set; }
         public virtual Quyen MaQuyenNavigation { get; set; }
-        public virtual Login idNavigation { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace QuanLyNhanSu.Services
 
         public Login Auth(string username, string password)
         {
-            var userLogin = _dbContext.Logins.Where(x=>x.Username == username && x.Password == EncryptionHelper.ToMD5(password) && x.status == 1).FirstOrDefault();
+            var userLogin = _dbContext.Logins.Where(x=>x.Username == username && x.Password == EncryptionHelper.ToMD5(password) && x.Status == 1).FirstOrDefault();
             if (userLogin != null)
             {
                 return userLogin;

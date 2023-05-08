@@ -36,6 +36,7 @@ namespace QuanLyNhanSu
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             services.AddTransient<IAuthService, AuthServiceImpl>();
             services.AddTransient<IAccountService, AccountServiceImpl>();
             services.AddTransient<IContractService, ContractServiceImpl>();
@@ -43,6 +44,8 @@ namespace QuanLyNhanSu
             services.AddTransient<IRoleService, RoleServiceImpl>();
             services.AddTransient<IRoleEmployeeService, RoleEmployeeServiceImpl>();
             services.AddTransient<IPositionService, PositionServiceImpl>();
+            services.AddTransient<IRevenueEmployeeService, RevenueEmployeeServiceImpl>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 

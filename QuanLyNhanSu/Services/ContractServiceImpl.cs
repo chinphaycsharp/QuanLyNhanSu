@@ -30,7 +30,7 @@ namespace QuanLyNhanSu.Services
                 MucluongCb = viewModel.MucluongCb,
                 DieukhoanHd = viewModel.DieukhoanHd,
                 CreatedAt = DateTime.Now,
-                status = 1
+                Status = 1
             };
             try
             {
@@ -47,7 +47,7 @@ namespace QuanLyNhanSu.Services
         public async Task<int> DeleteContract(string id)
         {
             var hd = await _dbContext.Hopdonglds.FindAsync(id);
-            hd.status = 0;
+            hd.Status = 0;
             try
             {
                 _dbContext.Hopdonglds.Update(hd);
@@ -72,7 +72,7 @@ namespace QuanLyNhanSu.Services
             hopdongld.MucluongCb = viewModel.MucluongCb;
             hopdongld.DieukhoanHd = viewModel.DieukhoanHd;
             hopdongld.CreatedAt = DateTime.Now;
-            hopdongld.status = 1;
+            hopdongld.Status = 1;
             try
             {
                 _dbContext.Hopdonglds.Update(hopdongld);
@@ -86,8 +86,8 @@ namespace QuanLyNhanSu.Services
         }
 
         public IQueryable<Hopdongld> GetAllContract()
-        {
-            return _dbContext.Hopdonglds.Where(x=>x.status == 1).AsQueryable();
+        {   
+            return _dbContext.Hopdonglds.Where(x=>x.Status == 1).AsQueryable();
         }
 
         public async Task<EditContractViewModel> GetContractById(string sohd)

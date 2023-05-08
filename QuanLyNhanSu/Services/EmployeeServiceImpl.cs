@@ -20,7 +20,7 @@ namespace QuanLyNhanSu.Services
         public async Task<int> AddAccount(string id, int Idlogin)
         {
             var employee = await _dbContext.HosoNvs.FindAsync(id);
-            employee.status = 1;
+            employee.Status = 1;
             employee.Idlogin = Idlogin;
             try
             {
@@ -50,7 +50,7 @@ namespace QuanLyNhanSu.Services
                 Noicap = viewModel.Noicap,
                 Điachithuongtru = viewModel.Điachithuongtru,
                 CreatedAt = DateTime.Now,
-                status = 1
+                Status = 1
             };
             try
             {
@@ -67,7 +67,7 @@ namespace QuanLyNhanSu.Services
         public async Task<int> DeleteEmployee(string id)
         {
             var employee = await _dbContext.HosoNvs.FindAsync(id);
-            employee.status = 0;
+            employee.Status = 0;
             try
             {
                 _dbContext.HosoNvs.Update(employee);
@@ -95,7 +95,7 @@ namespace QuanLyNhanSu.Services
             nv.Noicap = viewModel.Noicap;
             nv.Điachithuongtru = viewModel.Điachithuongtru;
             nv.UpdatedAt = DateTime.Now;
-            nv.status = 1;
+            nv.Status = 1;
             try
             {
                 _dbContext.HosoNvs.Update(nv);
@@ -110,12 +110,12 @@ namespace QuanLyNhanSu.Services
 
         public IQueryable<HosoNv> GetAllEmployees(string search)
         {
-            var employees = _dbContext.HosoNvs.Where(x=>x.status == 1).AsQueryable();
+            var employees = _dbContext.HosoNvs.Where(x=>x.Status == 1).AsQueryable();
             if (search == null || search == String.Empty)
             {
                 return employees.AsQueryable();
             }
-            employees = employees.Where(x => x.Msnv.Contains(search) && x.status == 1).AsQueryable();
+            employees = employees.Where(x => x.Msnv.Contains(search) && x.Status == 1).AsQueryable();
             return employees;
         }
 

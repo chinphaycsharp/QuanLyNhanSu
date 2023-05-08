@@ -34,6 +34,13 @@ namespace QuanLyNhanSu.Helpers
                         return result;
                     }
                     break;
+                case "Roles":
+                    if (value == null)
+                    {
+                        result = new ValidateResult(false, "Quyền không được để trống");
+                        return result;
+                    }
+                    break;
                 default:
                     break;
             }

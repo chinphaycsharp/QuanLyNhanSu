@@ -3,6 +3,7 @@ using QuanLyNhanSu.Helpers;
 using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.Models;
 using QuanLyNhanSu.ViewModels.Account;
+using QuanLyNhanSu.ViewModels.Role;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace QuanLyNhanSu.Services
                 Password = EncryptionHelper.ToMD5(viewModel.Password),
                 Email = viewModel.Email,
                 CreatedAt = DateTime.Now,
-                status = 1
+                Status = 1
             };
             try
             {
@@ -41,10 +42,37 @@ namespace QuanLyNhanSu.Services
             }
         }
 
+        public async Task<int> AddRoleToAccount(AddRoleToAccountViewModel viewModel)
+        {
+            int isSuccess = 1;
+            foreach (var role in viewModel.Roles)
+            {
+                isSuccess = -1;
+                QuyenNv quyen = new QuyenNv()
+                {
+                    IdLogin = viewModel.Id,
+                    MaQuyen = role,
+                    Status = 1
+                };
+
+                try
+                {
+                    _dbContext.QuyenNvs.Add(quyen);
+                    await _dbContext.SaveChangesAsync();
+                    isSuccess = 1;
+                }
+                catch (Exception ex)
+                {
+                    return -1;
+                }
+            }
+            return isSuccess;
+        }
+
         public async Task<int> DeleteAccount(int id)
         {
             var account = await _dbContext.Logins.FindAsync(id);
-            account.status = 0;
+            account.Status = 0;
             try
             {
                 _dbContext.Logins.Update(account);
@@ -64,7 +92,7 @@ namespace QuanLyNhanSu.Services
             account.Password = EncryptionHelper.ToMD5(viewModel.Password);
             account.Email = viewModel.Email;
             account.UpdatedAt = DateTime.Now;
-            account.status = 0;
+            account.Status = 0;
             try
             {
                 _dbContext.Logins.Update(account);
@@ -92,12 +120,12 @@ namespace QuanLyNhanSu.Services
 
         public IQueryable<Login> GetAllAccounts(string search)
         {
-            var accounts = _dbContext.Logins.Where(x=>x.status == 1).AsQueryable();
+            var accounts = _dbContext.Logins.Where(x=>x.Status == 1).AsQueryable();
             if (search == null || search == String.Empty)
             {
                 return accounts.AsQueryable();
             }
-            accounts = accounts.Where(x => x.Username.Contains(search) && x.status == 1).AsQueryable();
+            accounts = accounts.Where(x => x.Username.Contains(search) && x.Status == 1).AsQueryable();
             return accounts;
         }
     }
