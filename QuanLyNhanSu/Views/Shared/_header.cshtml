@@ -10,12 +10,18 @@
     List<Navbar> navbars = new List<Navbar>();
     foreach (var item in Navbar.navbars)
     {
+
         foreach (var role in viewModel.roles)
         {
             if (item.role == role.MaQuyen)
             {
                 if (!navbars.Any(x => x.name == item.name))
                 {
+                    var check = item.url.Contains(viewModel.userID.ToString());
+                    if (check == false && item.action == "Detail")
+                    {
+                        item.param = viewModel.Msnv.ToString();
+                    }
                     navbars.Add(item);
                 }
             }
@@ -28,7 +34,7 @@
         @foreach (var item in navbars)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="@item.url" asp-action="Index">@item.name</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="@item.url" asp-action="@item.action" asp-route-id="@item.param">@item.name</a>
             </li>
         }
     </ul>

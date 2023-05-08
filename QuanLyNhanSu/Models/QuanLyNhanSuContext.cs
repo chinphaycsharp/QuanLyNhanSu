@@ -8,6 +8,7 @@ namespace QuanLyNhanSu.Models
 {
     public partial class QuanLyNhanSuContext : DbContext
     {
+
         public QuanLyNhanSuContext(DbContextOptions<QuanLyNhanSuContext> options)
             : base(options)
         {
@@ -20,6 +21,7 @@ namespace QuanLyNhanSu.Models
         public virtual DbSet<Login> Logins { get; set; }
         public virtual DbSet<Quyen> Quyens { get; set; }
         public virtual DbSet<QuyenNv> QuyenNvs { get; set; }
+        public virtual DbSet<ViewDoanhthuNv> ViewDoanhthuNvs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -79,10 +81,12 @@ namespace QuanLyNhanSu.Models
                     .HasColumnName("created_at");
 
                 entity.Property(e => e.DoanhThu).HasColumnType("decimal(18, 0)");
-                entity.Property(e => e.Status).HasColumnName("status");
+
                 entity.Property(e => e.Msnv)
                     .HasMaxLength(10)
                     .HasColumnName("MSNV");
+
+                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -269,25 +273,53 @@ namespace QuanLyNhanSu.Models
 
             modelBuilder.Entity<QuyenNv>(entity =>
             {
-                //entity.HasNoKey();
+                entity.HasKey(e => new { e.MaQuyen, e.IdLogin });
 
                 entity.ToTable("QUYEN_NV");
 
-                entity.Property(e => e.IdLogin).HasColumnName("idLogin");
-                entity.Property(e => e.Status).HasColumnName("status");
                 entity.Property(e => e.MaQuyen)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IdLogin).HasColumnName("idLogin");
+
+                entity.Property(e => e.Status).HasColumnName("status");
+
                 entity.HasOne(d => d.IdLoginNavigation)
-                    .WithMany()
+                    .WithMany(p => p.QuyenNvs)
                     .HasForeignKey(d => d.IdLogin)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__QUYEN_NV__idLogi__267ABA7A");
 
                 entity.HasOne(d => d.MaQuyenNavigation)
-                    .WithMany()
+                    .WithMany(p => p.QuyenNvs)
                     .HasForeignKey(d => d.MaQuyen)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__QUYEN_NV__MaQuye__25869641");
+            });
+
+            modelBuilder.Entity<ViewDoanhthuNv>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VIEW_DOANHTHU_NV");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.DoanhThu).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.HotenNv)
+                    .HasMaxLength(30)
+                    .HasColumnName("HotenNV");
+
+                entity.Property(e => e.Ma).HasColumnName("ma");
+                entity.Property(e => e.Status).HasColumnName("status");
+                entity.Property(e => e.Msnv)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("MSNV");
             });
 
             OnModelCreatingPartial(modelBuilder);

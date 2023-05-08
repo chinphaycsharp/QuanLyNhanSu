@@ -3,6 +3,7 @@ using iText.IO.Source;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuanLyNhanSu.Commons;
 using QuanLyNhanSu.Helpers;
 using QuanLyNhanSu.Interfaces;
@@ -20,22 +21,25 @@ namespace QuanLyNhanSu.Controllers
 {
     public class RevenueEmployeeController : BaseController
     {
-        private readonly RevenueEmployeeServiceImpl _revenueEmployeeServiceImpl;
-        public RevenueEmployeeController(RevenueEmployeeServiceImpl revenueEmployeeServiceImpl)
+        private readonly IRevenueEmployeeService _revenueEmployeeService;
+        private readonly IEmployeeService _employeeService;
+        public RevenueEmployeeController(IRevenueEmployeeService revenueEmployeeService, IEmployeeService employeeService)
         {
-            _revenueEmployeeServiceImpl = revenueEmployeeServiceImpl;
+            _revenueEmployeeService = revenueEmployeeService;
+            _employeeService = employeeService;
         }
 
         public async Task<IActionResult> Index(string search, int? pageNumber)
         {
-            var revenueEmployees = _revenueEmployeeServiceImpl.GetAllRevenueEmployees();
+            var revenueEmployees =  _revenueEmployeeService.GetAllRevenueEmployees();
             int pageSize = 5;
-            return View(await PaginatedList<RevenueEmployeeViewModel>.CreateAsync(revenueEmployees, pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<ViewDoanhthuNv>.CreateAsync(revenueEmployees, pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.employees =  _employeeService.GetAllEmployees(null);
             return View();
         }
 
@@ -50,10 +54,10 @@ namespace QuanLyNhanSu.Controllers
                 ViewBag.resultDoanhThu = resultDoanhThu;
                 return View();
             }
-            var isSuccess = await _revenueEmployeeServiceImpl.AddRevenueEmployee(model);
+            var isSuccess = await _revenueEmployeeService.AddRevenueEmployee(model);
             if (isSuccess == 1)
             {
-                return RedirectToAction("Index", "Role");
+                return RedirectToAction("Index", "RevenueEmployee");
             }
             else
             {
@@ -64,7 +68,8 @@ namespace QuanLyNhanSu.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var account = await _revenueEmployeeServiceImpl.GetRevenueEmployeeById(id);
+            var account = await _revenueEmployeeService.GetRevenueEmployeeById(id);
+            ViewBag.employees = _employeeService.GetAllEmployees(null);
             return View(account);
         }
 
@@ -79,10 +84,10 @@ namespace QuanLyNhanSu.Controllers
                 ViewBag.resultDoanhThu = resultDoanhThu;
                 return View();
             }
-            var isSuccess = await _revenueEmployeeServiceImpl.EditRevenueEmployee(model);
+            var isSuccess = await _revenueEmployeeService.EditRevenueEmployee(model);
             if (isSuccess == 1)
             {
-                return RedirectToAction("Index", "Role");
+                return RedirectToAction("Index", "RevenueEmployee");
             }
             else
             {
@@ -92,7 +97,7 @@ namespace QuanLyNhanSu.Controllers
 
         public async Task<JsonResult> Delete(int id)
         {
-            var isSuccess = await _revenueEmployeeServiceImpl.DeleteRevenueEmployee(id);
+            var isSuccess = await _revenueEmployeeService.DeleteRevenueEmployee(id);
             if (isSuccess == 1)
             {
                 return Json(new
@@ -112,7 +117,7 @@ namespace QuanLyNhanSu.Controllers
         [HttpPost]
         public async Task<FileResult> Export()
         {
-            List<RevenueEmployeeViewModel> result = await _revenueEmployeeServiceImpl.GetAllRevenueEmployeesNoPaging();
+            List<RevenueEmployeeViewModel> result = await _revenueEmployeeService.GetAllRevenueEmployeesNoPaging();
             List<object> customers = (from customer in result
                                       select new[] {
                                       customer.Manv,
@@ -160,7 +165,7 @@ namespace QuanLyNhanSu.Controllers
                 pdfDocument.SetDefaultPageSize(PageSize.A4);
                 HtmlConverter.ConvertToPdf(stream, pdfDocument);
                 pdfDocument.Close();
-                return File(byteArrayOutputStream.ToArray(), "application/pdf", "Grid.pdf");
+                return File(byteArrayOutputStream.ToArray(), "application/pdf", "BaoCaoDoanhThu.pdf");
             }
         }
     }

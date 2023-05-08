@@ -58,7 +58,7 @@ namespace QuanLyNhanSu.Services
             Quyen quyen = await _dbContext.Quyens.FindAsync(viewModel.MaQuyen);
             quyen.MaQuyen = viewModel.MaQuyen;
             quyen.MoTa = viewModel.MoTa;
-            quyen.Status = 0;
+            quyen.Status = 1;
             try
             {
                 _dbContext.Quyens.Update(quyen);

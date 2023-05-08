@@ -92,7 +92,7 @@ namespace QuanLyNhanSu.Services
             account.Password = EncryptionHelper.ToMD5(viewModel.Password);
             account.Email = viewModel.Email;
             account.UpdatedAt = DateTime.Now;
-            account.Status = 0;
+            account.Status = 1;
             try
             {
                 _dbContext.Logins.Update(account);

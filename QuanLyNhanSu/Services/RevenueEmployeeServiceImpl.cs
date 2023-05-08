@@ -23,7 +23,7 @@ namespace QuanLyNhanSu.Services
             {
                 DoanhThu = viewModel.DoanhThu,
                 Msnv = viewModel.Msnv,
-                UpdatedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
                 Status = 1
             };
             try
@@ -73,21 +73,9 @@ namespace QuanLyNhanSu.Services
             }
         }
 
-        public IQueryable<RevenueEmployeeViewModel> GetAllRevenueEmployees()
+        public IQueryable<ViewDoanhthuNv> GetAllRevenueEmployees()
         {
-            var doanhthu = _dbContext.DoanhthuNvs.Where(x => x.Status == 1).ToList();
-            var nvs = _dbContext.HosoNvs.Where(x => x.Status == 1).ToList();
-            var result = from d in doanhthu
-                         join nv in nvs on d.Msnv equals nv.Msnv
-                         select new RevenueEmployeeViewModel()
-                         {
-                             Id = d.Ma,
-                             Manv = d.Msnv,
-                             Tennv = nv.HotenNv,
-                             DoanhThu = d.DoanhThu.ToString(),
-                             NgayChot = d.CreatedAt.ToString()
-                         };
-            return result.AsQueryable();
+            return _dbContext.ViewDoanhthuNvs.Where(x=>x.Status == 1).AsQueryable();
         }
 
         public async Task<List<RevenueEmployeeViewModel>> GetAllRevenueEmployeesNoPaging()
@@ -109,11 +97,13 @@ namespace QuanLyNhanSu.Services
         public async Task<EditRevenueEmployeeViewModel> GetRevenueEmployeeById(int id)
         {
             var revenueEmployee = await _dbContext.DoanhthuNvs.FindAsync(id);
+            var employee = await _dbContext.HosoNvs.Where(x => x.Msnv == revenueEmployee.Msnv).FirstOrDefaultAsync();
             EditRevenueEmployeeViewModel reseult = new EditRevenueEmployeeViewModel()
             {
                 Ma = id,
                 Msnv = revenueEmployee.Msnv,
                 DoanhThu = revenueEmployee.DoanhThu,
+                HotenNV = employee.HotenNv,
                 Status = revenueEmployee.Status
             };
             return reseult;

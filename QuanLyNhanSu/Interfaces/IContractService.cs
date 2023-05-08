@@ -11,6 +11,7 @@ namespace QuanLyNhanSu.Interfaces
     public interface IContractService
     {
         IQueryable<Hopdongld> GetAllContract();
+        Task<EditContractViewModel> GetContractByEmpId(string msnv);
         Task<EditContractViewModel> GetContractById(string sohd);
         Task<int> AddContract(AddContractViewModel viewModel);
         Task<int> EditContract(EditContractViewModel viewModel);

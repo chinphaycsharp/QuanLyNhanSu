@@ -90,6 +90,28 @@ namespace QuanLyNhanSu.Services
             return _dbContext.Hopdonglds.Where(x=>x.Status == 1).AsQueryable();
         }
 
+        public async Task<EditContractViewModel> GetContractByEmpId(string msnv)
+        {
+            var hd = await _dbContext.Hopdonglds.Where(x=>x.Msnv == msnv).FirstOrDefaultAsync();
+            if(hd != null)
+            {
+                EditContractViewModel result = new EditContractViewModel()
+                {
+                    SoHd = hd.SoHd,
+                    Mscv = hd.Mscv,
+                    Msnv = hd.Msnv,
+                    LoaiHd = hd.LoaiHd,
+                    Tgianbatdau = hd.Tgianbatdau,
+                    Tgianketthuc = hd.Tgianketthuc,
+                    HesoluongCb = hd.HesoluongCb,
+                    MucluongCb = hd.MucluongCb,
+                    DieukhoanHd = hd.DieukhoanHd,
+                };
+                return result;
+            }
+            return default;
+        }
+
         public async Task<EditContractViewModel> GetContractById(string sohd)
         {
             var hd = await _dbContext.Hopdonglds.FindAsync(sohd);

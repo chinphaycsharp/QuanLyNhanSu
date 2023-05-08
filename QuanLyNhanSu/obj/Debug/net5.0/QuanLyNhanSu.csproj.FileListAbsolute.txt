@@ -611,3 +611,8 @@ D:\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstracti
 D:\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\RevenueEmployee\Index.cshtml.g.cs
 D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Account\AddRoleToAccount.cshtml.g.cs
+D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\RevenueEmployee\Create.cshtml.g.cs
+D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\RevenueEmployee\Edit.cshtml.g.cs
+D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Account\Detail.cshtml.g.cs
+D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Contract\Detail.cshtml.g.cs
+D:\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\net5.0\Razor\Views\Employee\Detail.cshtml.g.cs

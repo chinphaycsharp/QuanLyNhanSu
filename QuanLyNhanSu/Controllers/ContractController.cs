@@ -111,6 +111,48 @@ namespace QuanLyNhanSu.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Detail(string id)
+        {
+            var account = await _contractService.GetContractByEmpId(id);
+            ViewBag.employees = _employeeService.GetAllEmployees(null);
+            ViewBag.positions = _positionService.GetAllPostions(null);
+            return View(account);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Detail(EditContractViewModel model)
+        {
+            ValidateResult resultMscv = model.Mscv.ValidateContract("Mscv") == null ? null : model.Mscv.ValidateContract("password");
+            ValidateResult resultMsnv = model.Msnv.ValidateContract("Msnv") == null ? null : model.Msnv.ValidateContract("Msnv");
+            ValidateResult resultLoaiHd = model.LoaiHd.ValidateContract("LoaiHd") == null ? null : model.LoaiHd.ValidateContract("LoaiHd");
+            ValidateResult resultHesoluongCb = model.HesoluongCb.ToString().ValidateContract("HesoluongCb") == null ? null : model.HesoluongCb.ToString().ValidateContract("HesoluongCb");
+            ValidateResult resultMucluongCb = model.MucluongCb.ToString().ValidateContract("MucluongCb") == null ? null : model.MucluongCb.ToString().ValidateContract("MucluongCb");
+            ValidateResult DieukhoanHd = model.DieukhoanHd.ValidateContract("DieukhoanHd") == null ? null : model.DieukhoanHd.ValidateContract("DieukhoanHd");
+            if (resultMscv._isNull == false || resultMsnv._isNull == false || resultLoaiHd._isNull == false
+                || resultHesoluongCb._isNull == false || resultMucluongCb._isNull == false || DieukhoanHd._isNull == false)
+            {
+                ViewBag.resultMscv = resultMscv;
+                ViewBag.resultMsnv = resultMsnv;
+                ViewBag.resultLoaiHd = resultLoaiHd;
+                ViewBag.resultHesoluongCb = resultHesoluongCb;
+                ViewBag.resultMucluongCb = resultMucluongCb;
+                ViewBag.DieukhoanHd = DieukhoanHd;
+                return View();
+            }
+            model.UpdateAt = System.DateTime.Now;
+
+            var isSuccess = await _contractService.EditContract(model);
+            if (isSuccess == 1)
+            {
+                return RedirectToAction("Index", "Contract");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public async Task<JsonResult> Delete(string id)
         {
             var isSuccess = await _contractService.DeleteContract(id);

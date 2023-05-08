@@ -10,6 +10,7 @@ namespace QuanLyNhanSu.Models
         public Login()
         {
             HosoNvs = new HashSet<HosoNv>();
+            QuyenNvs = new HashSet<QuyenNv>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,6 @@ namespace QuanLyNhanSu.Models
         public int? Status { get; set; }
 
         public virtual ICollection<HosoNv> HosoNvs { get; set; }
+        public virtual ICollection<QuyenNv> QuyenNvs { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using QuanLyNhanSu.Interfaces;
 using QuanLyNhanSu.Models;
 using QuanLyNhanSu.ViewModels.Account;
 using QuanLyNhanSu.ViewModels.Role;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,10 +16,14 @@ namespace QuanLyNhanSu.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IRoleService _roleService;
-        public AccountController(IAccountService accountService, IRoleService roleService)
+        private readonly IRoleEmployeeService _roleEmployeeService;
+        private readonly IEmployeeService _employeeService;
+        public AccountController(IAccountService accountService, IRoleService roleService, IRoleEmployeeService roleEmployeeService, IEmployeeService employeeService)
         {
             _accountService = accountService;
             _roleService = roleService;
+            _roleEmployeeService = roleEmployeeService;
+            _employeeService = employeeService;
         }
 
         public async Task<IActionResult> Index(string search, int? pageNumber)
@@ -29,13 +34,15 @@ namespace QuanLyNhanSu.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddRoleToAccount(int id)
+        public async Task<IActionResult> AddRoleToAccount(int id)
         {
             var roles = _roleService.GetAllRoles().ToList();
+            var roleEmployees = await _roleEmployeeService.GetRoleEmployeeByIdAccount(id);
             AddRoleToAccountViewModel model = new AddRoleToAccountViewModel()
             {
                 Id = id,
-                drpRoles = roles.Select(x => new SelectListItem { Text = x.MaQuyen, Value = x.MaQuyen }).ToList()
+                drpRoles = roles.Select(x => new SelectListItem { Text = x.MaQuyen, Value = x.MaQuyen }).ToList(),
+                Roles = roleEmployees.Select(x=>x.MaQuyen).ToArray(),
             };
             return View(model);
         }
@@ -95,14 +102,50 @@ namespace QuanLyNhanSu.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var account = await _accountService.GetAccountById(id);
+            var account = await _accountService.GetAccountById(Convert.ToInt32(id));
             return View(account);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(EditAccountViewModel model)
+        {
+            ValidateResult resultUsername = model.Username.ValidateAccount("username", "") == null ? null : model.Username.ValidateAccount("username", "");
+            ValidateResult resultPassword = model.Password.ValidateAccount("password", "") == null ? null : model.Password.ValidateAccount("password", "");
+            ValidateResult resultComfirmPass = model.Password.ValidateAccount("", model.ConfirmPassword) == null ? null : model.Password.ValidateAccount("", model.ConfirmPassword);
+            ValidateResult resultEmail = model.Email.ValidateAccount("email", "") == null ? null : model.Email.ValidateAccount("email", "");
+            if (resultUsername._isNull == false || resultPassword._isNull == false || resultComfirmPass._isNull == false || resultEmail._isNull == false)
+            {
+                ViewBag.resultUsername = resultUsername;
+                ViewBag.resultPassword = resultPassword;
+                ViewBag.resultComfirmPass = resultComfirmPass;
+                ViewBag.resultEmail = resultEmail;
+                return View();
+            }
+            model.UpdatedAt = System.DateTime.Now;
+
+            var isSuccess = await _accountService.EditAccount(model);
+            if (isSuccess == 1)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(string id)
+        {
+            var emp = await _employeeService.GetEmployeeById(id);
+            var account = await _accountService.GetAccountById(emp.Idlogin.Value);
+            return View(account);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Detail(EditAccountViewModel model)
         {
             ValidateResult resultUsername = model.Username.ValidateAccount("username", "") == null ? null : model.Username.ValidateAccount("username", "");
             ValidateResult resultPassword = model.Password.ValidateAccount("password", "") == null ? null : model.Password.ValidateAccount("password", "");

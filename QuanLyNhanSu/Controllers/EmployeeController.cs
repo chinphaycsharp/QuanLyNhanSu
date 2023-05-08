@@ -139,6 +139,47 @@ namespace QuanLyNhanSu.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Detail(string id)
+        {
+            var account = await _employeeService.GetEmployeeById(id);
+            return View(account);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Detail(EditEmployeeViewModel model)
+        {
+            ValidateResult resultHotenNv = model.HotenNv.ValidateEmployee("HotenNv", "") == null ? null : model.HotenNv.ValidateEmployee("HotenNv", "");
+            ValidateResult resultGioitinh = model.Gioitinh.ValidateEmployee("Gioitinh", "") == null ? null : model.Gioitinh.ValidateEmployee("", "");
+            ValidateResult resultQueQuan = model.QueQuan.ValidateEmployee("QueQuan", "") == null ? null : model.QueQuan.ValidateEmployee("QueQuan", "");
+            ValidateResult resultSđt = model.Sđt.ValidateEmployee("Sđt", "") == null ? null : model.Sđt.ValidateEmployee("Sđt", "");
+            ValidateResult resultSoCmtnd = model.SoCmtnd.ValidateEmployee("SoCmtnd", "") == null ? null : model.SoCmtnd.ValidateEmployee("SoCmtnd", "");
+            ValidateResult resultĐiachithuongtru = model.Điachithuongtru.ValidateEmployee("Điachithuongtru", "") == null ? null : model.Điachithuongtru.ValidateEmployee("Điachithuongtru", "");
+            if (resultHotenNv._isNull == false || resultGioitinh._isNull == false || resultQueQuan._isNull == false
+                || resultSđt._isNull == false || resultSoCmtnd._isNull == false || resultĐiachithuongtru._isNull == false)
+            {
+
+                ViewBag.resultHotenNv = resultHotenNv;
+                ViewBag.resultGioitinh = resultGioitinh;
+                ViewBag.resultQueQuan = resultQueQuan;
+                ViewBag.resultSđt = resultSđt;
+                ViewBag.resultSoCmtnd = resultSoCmtnd;
+                ViewBag.resultĐiachithuongtru = resultĐiachithuongtru;
+                return View();
+            }
+            model.UpdatedAt = System.DateTime.Now;
+
+            var isSuccess = await _employeeService.EditEmployee(model);
+            if (isSuccess == 1)
+            {
+                return RedirectToAction("Index", "Employee");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public async Task<JsonResult> Delete(string id)
         {
             var isSuccess = await _employeeService.DeleteEmployee(id);

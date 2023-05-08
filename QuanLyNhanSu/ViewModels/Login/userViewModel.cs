@@ -11,6 +11,7 @@ namespace QuanLyNhanSu.ViewModels.Login
     {
         public int userID { get; set; }
         public string userName { get; set; }
+        public string Msnv { get; set; }
         public List<RoleEmployeeViewModel> roles { get; set; }
     }
 }

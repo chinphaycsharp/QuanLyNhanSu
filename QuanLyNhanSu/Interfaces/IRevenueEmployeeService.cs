@@ -9,7 +9,7 @@ namespace QuanLyNhanSu.Interfaces
 {
     public interface IRevenueEmployeeService
     {
-        IQueryable<RevenueEmployeeViewModel> GetAllRevenueEmployees();
+        IQueryable<ViewDoanhthuNv> GetAllRevenueEmployees();
         Task<List<RevenueEmployeeViewModel>> GetAllRevenueEmployeesNoPaging();
         Task<EditRevenueEmployeeViewModel> GetRevenueEmployeeById(int id);
         Task<int> AddRevenueEmployee(AddRevenueEmployeeViewModel viewModel);

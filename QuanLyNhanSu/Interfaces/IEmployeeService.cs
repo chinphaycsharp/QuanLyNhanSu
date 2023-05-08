@@ -14,5 +14,6 @@ namespace QuanLyNhanSu.Interfaces
         Task<int> EditEmployee(EditEmployeeViewModel viewModel);
         Task<int> DeleteEmployee(string id);
         Task<int> AddAccount(string id, int Idlogin);
+        Task<EditEmployeeViewModel> GetEmployeeByAccountId(int idAccount);
     }
 }

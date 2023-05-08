@@ -13,10 +13,12 @@ namespace QuanLyNhanSu.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IRoleEmployeeService _roleEmployeeService;
-        public TokenController(IAuthService authService, IRoleEmployeeService roleEmployeeService)
+        private readonly IEmployeeService _employeeService;
+        public TokenController(IAuthService authService, IRoleEmployeeService roleEmployeeService, IEmployeeService employeeService)
         {
             _authService = authService;
             _roleEmployeeService = roleEmployeeService;
+            _employeeService = employeeService;
         }
 
         public IActionResult Index()
@@ -35,6 +37,7 @@ namespace QuanLyNhanSu.Controllers
             if (result != null)
             {
                 var roles = await _roleEmployeeService.GetRoleEmployeeByIdAccount(result.Id);
+                var employee = await _employeeService.GetEmployeeByAccountId(result.Id);
                 try
                 {
                     string json = HttpContext.Session.GetString(commonConst.user_session);
@@ -42,7 +45,8 @@ namespace QuanLyNhanSu.Controllers
                     {
                         userID = result.Id,
                         userName = model.username,
-                        roles = roles
+                        roles = roles,
+                        Msnv = employee != default ? employee.Msnv : null
                     };
 
                     string jsonSave = JsonConvert.SerializeObject(userLogin);

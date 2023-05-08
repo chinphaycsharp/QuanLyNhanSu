@@ -119,23 +119,52 @@ namespace QuanLyNhanSu.Services
             return employees;
         }
 
+        public async Task<EditEmployeeViewModel> GetEmployeeByAccountId(int idAccount)
+        {
+            var employee = await _dbContext.HosoNvs.Where(x=>x.Idlogin == idAccount).FirstOrDefaultAsync();
+            if(employee != null)
+            {
+                EditEmployeeViewModel result = new EditEmployeeViewModel()
+                {
+                    Msnv = employee.Msnv,
+                    HotenNv = employee.HotenNv,
+                    Gioitinh = employee.Gioitinh,
+                    Ngaysinh = employee.Ngaysinh,
+                    QueQuan = employee.QueQuan,
+                    Sđt = employee.Sđt,
+                    SoCmtnd = employee.SoCmtnd,
+                    Ngaycap = employee.Ngaycap,
+                    Noicap = employee.Noicap,
+                    Điachithuongtru = employee.Điachithuongtru
+                };
+                return result;
+            }
+
+            return default;
+        }
+
         public async Task<EditEmployeeViewModel> GetEmployeeById(string manv)
         {
             var employee = await _dbContext.HosoNvs.FindAsync(manv);
-            EditEmployeeViewModel result = new EditEmployeeViewModel()
+            if(employee != null)
             {
-                Msnv = employee.Msnv,
-                HotenNv = employee.HotenNv,
-                Gioitinh = employee.Gioitinh,
-                Ngaysinh = employee.Ngaysinh,
-                QueQuan = employee.QueQuan,
-                Sđt = employee.Sđt,
-                SoCmtnd = employee.SoCmtnd,
-                Ngaycap = employee.Ngaycap,
-                Noicap = employee.Noicap,
-                Điachithuongtru = employee.Điachithuongtru
-            };
-            return result;
+                EditEmployeeViewModel result = new EditEmployeeViewModel()
+                {
+                    Msnv = employee.Msnv,
+                    Idlogin = employee.Idlogin,
+                    HotenNv = employee.HotenNv,
+                    Gioitinh = employee.Gioitinh,
+                    Ngaysinh = employee.Ngaysinh,
+                    QueQuan = employee.QueQuan,
+                    Sđt = employee.Sđt,
+                    SoCmtnd = employee.SoCmtnd,
+                    Ngaycap = employee.Ngaycap,
+                    Noicap = employee.Noicap,
+                    Điachithuongtru = employee.Điachithuongtru
+                };
+                return result;
+            }
+            return default;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace QuanLyNhanSu.ViewModels.RevenueEmployee
     {
         public int Ma { get; set; }
         public string Msnv { get; set; }
+        public string HotenNV { get; set; }
         public decimal DoanhThu { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public int? Status { get; set; }

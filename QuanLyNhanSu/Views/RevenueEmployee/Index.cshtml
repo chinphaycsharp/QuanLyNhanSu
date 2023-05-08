@@ -1,5 +1,5 @@
 ﻿@using QuanLyNhanSu.Commons
-@model PaginatedList<QuanLyNhanSu.ViewModels.RevenueEmployee.RevenueEmployeeViewModel>
+@model PaginatedList<QuanLyNhanSu.Models.ViewDoanhthuNv>
 @{
     ViewData["Title"] = "Index";
 }
@@ -28,7 +28,7 @@
 <div style="display:flex ;justify-content:space-between">
     <a asp-action="Create" class="btn btn-outline-success">Thêm</a>
     <span>
-        <form class="form-inline my-2 my-lg-0" method="post" asp-action="Export" asp-controller="Home">
+        <form class="form-inline my-2 my-lg-0" method="post" asp-action="Export" asp-controller="RevenueEmployee">
              <input type="submit" id="btnSubmit" value="Export" />
         </form>
     </span>
@@ -58,22 +58,22 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Manv)
+                    @Html.DisplayFor(modelItem => item.Msnv)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Tennv)
+                    @Html.DisplayFor(modelItem => item.HotenNv)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DoanhThu)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NgayChot)
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
         <td class="text-center">
-                                <a asp-action="Edit" class="btn btn-outline-primary" asp-route-id="@item.Id">Sửa</a>
+                                <a asp-action="Edit" class="btn btn-outline-primary" asp-route-id="@item.Ma">Sửa</a>
                         </td>
                         <td class="text-center">
-                            <a data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-danger" onclick="loadId('@item.Id')">Xóa</a>
+                            <a data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-danger" onclick="loadId('@item.Ma')">Xóa</a>
                         </td>
             </tr>
         }

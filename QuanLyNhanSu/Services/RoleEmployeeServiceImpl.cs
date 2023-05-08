@@ -82,7 +82,7 @@ namespace QuanLyNhanSu.Services
             var result = from x in quyenNvs
                          select new RoleEmployeeViewModel()
                          {
-                             id = x.IdLogin.Value,
+                             id = x.IdLogin,
                              MaQuyen = x.MaQuyen
                          };
             return result.ToList();
